@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: spring-graphql-example
+#  threads:
+#    virtual:
+#      enabled: true
+
+  graphql:
+    graphiql:
+      enabled: true
+      path: /graphiql # localhost:8080/graphiql
+
+logging:
+  level:
+    org.springframework.graphql: INFO
