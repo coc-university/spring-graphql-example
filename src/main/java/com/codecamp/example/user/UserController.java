@@ -23,19 +23,37 @@ public class UserController {
                         .id("Robin-1")
                         .shopId("shop-1")
                         .name("Robin")
-                        //.email() // is null, will be fetched via @SchemaMapping in MailController
+                        //.mails() // is null, will be fetched via @SchemaMapping in MailController
                         .build(),
                 User.newBuilder()
                         .id("Peter-1")
                         .shopId("shop-2")
                         .name("Peter")
-                        //.email() // is null, will be fetched via @SchemaMapping in MailController
+                        //.mails() // is null, will be fetched via @SchemaMapping in MailController
                         .build(),
                 User.newBuilder()
                         .id("Max-1")
                         .shopId("shop-1")
                         .name("Max")
-                        //.email() // is null, will be fetched via @SchemaMapping in MailController
+                        //.mails() // is null, will be fetched via @SchemaMapping in MailController
+                        .build(),
+                User.newBuilder()
+                        .id("Andi-1")
+                        .shopId("shop-1")
+                        .name("Andi")
+                        //.mails() // is null, will be fetched via @SchemaMapping in MailController
+                        .build(),
+                User.newBuilder()
+                        .id("Laura-1")
+                        .shopId("shop-1")
+                        .name("Laura")
+                        //.mails() // is null and stays null, user has no mails
+                        .build(),
+                User.newBuilder()
+                        .id("Eva-1")
+                        .shopId("shop-1")
+                        .name("Eva")
+                        //.mails() // is null and stays null, user has no mails
                         .build()
         );
     }
@@ -52,8 +70,8 @@ public class UserController {
     // will be called only if the client also requests the Users of the Shop
     @SchemaMapping
     public List<User> users(Shop shop) throws InterruptedException {
-        log.info("wait 2 seconds in UserController for list of users for given shop");
-        Thread.sleep(2_000); // fetch users from db or other microservice
+        log.info("wait 1 second in UserController for list of users for given shop with name {}", shop.getName());
+        Thread.sleep(1_000); // fetch users from db or other microservice
         // get only Users of this Shop
         return users.stream()
                 .filter(user -> user.getShopId().equals(shop.getId()))

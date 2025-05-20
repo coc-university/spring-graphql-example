@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 public class ShopController {
 
     @QueryMapping
-    public Shop shop() {
+    public Shop shop() throws InterruptedException {
+        log.info("wait 1 second in ShopController for shop");
+        Thread.sleep(1_000); // fetch users from db or other microservice
         return Shop.newBuilder()
                 .id("shop-1")
                 .name("Test-Shop")

@@ -14,7 +14,7 @@ type User {
     id: ID!
     shopId: ID
     name: String!
-    mails: [Mail!]!
+    mails: [Mail]!
 }
 
 type Mail {
