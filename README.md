@@ -1,5 +1,19 @@
 # spring-graphql-example
 
+## Domain:
+
+- Shop with Users that have Mail-Addresses
+- check out schema.graphql in src/man/resources (like OpenAPI spec in REST)
+- DTO java objects will be generated from schema via maven plugin
+
+## Implementation:
+
+- Controller to handle request (like RestController)
+- @QueryMapping to get data, e.g. via graphiql ui (enable in application.yaml)
+- @SchemaMapping to load additional properties
+- virtual threads to load in parallel (enable in application.yaml)
+- @BatchMapping to avoid n+1 problem of @SchemaMapping
+
 ## Based on:
 
 Dan Vega:
