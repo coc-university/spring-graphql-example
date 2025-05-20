@@ -1,11 +1,23 @@
 
 type Query {
-    hello: String!
+    shop: Shop!
     user(name: String!): User!
+}
+
+type Shop {
+    id: ID!
+    name: String!
     users: [User!]!
 }
 
 type User {
+    id: ID!
+    shopId: ID
     name: String!
-    email: String!
+    mails: [Mail!]!
+}
+
+type Mail {
+    address: String!
+    userId: ID!
 }
