@@ -8,11 +8,12 @@
 
 ## Implementation:
 
-- Controller to handle request (like RestController)
-- @QueryMapping to get data, e.g. via graphiql ui (enable in application.yaml)
+- @Controller to handle requests (like @RestController)
+- @MutationMapping to modify data (like @Post/@Put/@Delete-Mapping in REST)
+- @QueryMapping to get data (like @GetMapping in REST), e.g. via graphiql ui
 - @SchemaMapping to load additional properties
 - virtual threads to load in parallel (enable in application.yaml)
-- @BatchMapping to avoid n+1 problem of @SchemaMapping
+- @BatchMapping to avoid n+1 problem (many requests) of @SchemaMapping
 
 ## Based on:
 

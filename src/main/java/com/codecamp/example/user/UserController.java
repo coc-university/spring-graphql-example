@@ -1,13 +1,17 @@
 package com.codecamp.example.user;
 
+import com.codecamp.example.types.InputUser;
 import com.codecamp.example.types.Shop;
 import com.codecamp.example.types.User;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,10 +19,42 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserController {
 
-    private final List<User> users;
+    private List<User> users;
 
-    public UserController() {
-        this.users = List.of(
+    @MutationMapping
+    public User addUser(@Argument InputUser inputUser) {
+        User newUser = User.newBuilder()
+                .id(inputUser.getName() + "-1")
+                .shopId(inputUser.getShopId())
+                .name(inputUser.getName())
+                .build();
+        users.add(newUser);
+        return newUser;
+    }
+
+    @QueryMapping
+    public User user(@Argument String name) {
+        //log.info("User Name: {}", name);
+        return users.stream()
+                .filter(user -> user.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    // will be called only if the client also requests the Users of the Shop
+    @SchemaMapping
+    public List<User> users(Shop shop) throws InterruptedException {
+        //log.info("wait 1 second in UserController for list of users for given shop with name {}", shop.getName());
+        Thread.sleep(1_000); // fetch users from db or other microservice
+        // get only Users of this Shop
+        return users.stream()
+                .filter(user -> user.getShopId().equals(shop.getId()))
+                .collect(Collectors.toList());
+    }
+
+    @PostConstruct
+    private void initUsers() {
+        this.users = new ArrayList<>(List.of(
                 User.newBuilder()
                         .id("Robin-1")
                         .shopId("shop-1")
@@ -55,26 +91,6 @@ public class UserController {
                         .name("Eva")
                         //.mails() // is null and stays null, user has no mails
                         .build()
-        );
-    }
-
-    @QueryMapping
-    public User user(@Argument String name) {
-        //log.info("User Name: {}", name);
-        return users.stream()
-                .filter(user -> user.getName().equals(name))
-                .findFirst()
-                .orElse(null);
-    }
-
-    // will be called only if the client also requests the Users of the Shop
-    @SchemaMapping
-    public List<User> users(Shop shop) throws InterruptedException {
-        //log.info("wait 1 second in UserController for list of users for given shop with name {}", shop.getName());
-        Thread.sleep(1_000); // fetch users from db or other microservice
-        // get only Users of this Shop
-        return users.stream()
-                .filter(user -> user.getShopId().equals(shop.getId()))
-                .collect(Collectors.toList());
+        ));
     }
 }

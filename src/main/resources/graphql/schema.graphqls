@@ -4,6 +4,19 @@ type Query {
     user(name: String!): User!
 }
 
+type Mutation {
+    addUser(inputUser: InputUser): User!
+}
+
+# ---
+
+input InputUser {
+    shopId: ID
+    name: String!
+}
+
+# ---
+
 type Shop {
     id: ID!
     name: String!

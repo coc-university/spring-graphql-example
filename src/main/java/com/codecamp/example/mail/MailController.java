@@ -3,6 +3,7 @@ package com.codecamp.example.mail;
 import com.codecamp.example.types.Mail;
 import com.codecamp.example.types.Shop;
 import com.codecamp.example.types.User;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -18,28 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MailController {
 
-    private final List<Mail> mails;
-
-    public MailController() {
-        this.mails = List.of(
-                Mail.newBuilder()
-                        .address("robin@codecamp.com")
-                        .userId("Robin-1")
-                        .build(),
-                Mail.newBuilder()
-                        .address("peter@codecamp.com")
-                        .userId("Peter-1")
-                        .build(),
-                Mail.newBuilder()
-                        .address("max@codecamp.com")
-                        .userId("Max-1")
-                        .build(),
-                Mail.newBuilder()
-                        .address("andi@codecamp.com")
-                        .userId("Andi-1")
-                        .build()
-        );
-    }
+    private List<Mail> mails;
 
     // will be called only if the client also requests the Mails of the User
     @SchemaMapping
@@ -67,5 +47,27 @@ public class MailController {
 //                .map(user -> mailsByUserId.getOrDefault(user.getId(), new ArrayList<>()))
 //                .toList();
 //    }
+
+    @PostConstruct
+    private void initMails() {
+        this.mails = new ArrayList<>(List.of(
+                Mail.newBuilder()
+                        .address("robin@codecamp.com")
+                        .userId("Robin-1")
+                        .build(),
+                Mail.newBuilder()
+                        .address("peter@codecamp.com")
+                        .userId("Peter-1")
+                        .build(),
+                Mail.newBuilder()
+                        .address("max@codecamp.com")
+                        .userId("Max-1")
+                        .build(),
+                Mail.newBuilder()
+                        .address("andi@codecamp.com")
+                        .userId("Andi-1")
+                        .build()
+        ));
+    }
 
 }
