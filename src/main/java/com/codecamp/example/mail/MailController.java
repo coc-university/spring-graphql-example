@@ -44,8 +44,8 @@ public class MailController {
     // will be called only if the client also requests the Mails of the User
     @SchemaMapping
     public List<Mail> mails(User user) throws InterruptedException {
-        log.info("wait 1 second in MailController for list of mails for given user with name {}", user.getName());
-        Thread.sleep(1_000); // fetch from db or other microservice
+        //log.info("wait 1 second in MailController for list of mails for given user with name {}", user.getName());
+        Thread.sleep(1_000); // fetch mails from db or other microservice
         // get only Mails of this User
         return mails.stream()
                 .filter(mail -> mail.getUserId().equals(user.getId()))

@@ -60,7 +60,7 @@ public class UserController {
 
     @QueryMapping
     public User user(@Argument String name) {
-        log.info("User Name: {}", name);
+        //log.info("User Name: {}", name);
         return users.stream()
                 .filter(user -> user.getName().equals(name))
                 .findFirst()
@@ -70,7 +70,7 @@ public class UserController {
     // will be called only if the client also requests the Users of the Shop
     @SchemaMapping
     public List<User> users(Shop shop) throws InterruptedException {
-        log.info("wait 1 second in UserController for list of users for given shop with name {}", shop.getName());
+        //log.info("wait 1 second in UserController for list of users for given shop with name {}", shop.getName());
         Thread.sleep(1_000); // fetch users from db or other microservice
         // get only Users of this Shop
         return users.stream()
